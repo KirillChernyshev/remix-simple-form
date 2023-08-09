@@ -1,8 +1,13 @@
-import { Link, useLoaderData } from "@remix-run/react";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import { Form, useLoaderData } from "@remix-run/react";
+import { createTodo, getTodoListings } from "~/models/todo.server";
 
-import type { LoaderFunction } from "@remix-run/node";
-import { getTodoListings } from "~/models/todo.server";
 import { json } from "@remix-run/node";
+
+const formClasses = "flex flex-col space-y-2";
+const buttonClasses =
+  "rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300";
+const inputClasses = "rounded-md border border-gray-300 px-4 py-2";
 
 type LoaderData = {
   todos: Awaited<ReturnType<typeof getTodoListings>>;
@@ -14,25 +19,42 @@ export const loader: LoaderFunction = async () => {
   return json<LoaderData>({ todos });
 };
 
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData();
+
+  const title = formData.get("title") as string;
+  return await createTodo({ title });
+};
+
+export const NewTodoForm = () => {
+  return (
+    <Form className={formClasses} method="post" action="/todos">
+      <input className={inputClasses} name="title" />
+      <button className={buttonClasses} type="submit">
+        Create Todo
+      </button>
+    </Form>
+  );
+};
+
 export default function TodosRoute() {
   const { todos } = useLoaderData<LoaderData>();
 
   return (
-    <div className="flex flex-grow flex-col justify-center align-middle">
-      <h1>Todos</h1>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>
-            <Link
-              to={todo.id}
-              prefetch="intent"
-              className="text-blue-600 underline"
-            >
-              {todo.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+    <div className="flex flex-grow justify-center align-middle">
+      <div className="flex min-w-[50vw] flex-col gap-8">
+        <div>
+          <h1 className="text-lg font-semibold">Todos</h1>
+          <ul className="mt-2">
+            {todos.map((todo) => (
+              <li key={todo.id}>
+                <p>{todo.title}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <NewTodoForm key={todos.length} />
+      </div>
     </div>
   );
 }

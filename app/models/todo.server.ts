@@ -8,7 +8,6 @@ export const getTodoListings = async () => {
     select: {
       id: true,
       title: true,
-      body: true,
     },
   });
 };
@@ -23,7 +22,7 @@ export const getTodo = async (id: string) => {
   });
 };
 
-export const createTodo = (data: Pick<Todo, "title" | "body">) => {
+export const createTodo = (data: Pick<Todo, "title">) => {
   return prisma.todo.create({
     data,
   });

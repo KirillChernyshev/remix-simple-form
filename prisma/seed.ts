@@ -10,14 +10,14 @@ async function seed() {
     // no worries if it doesn't exist yet
   });
 
+  await prisma.todo.deleteMany();
+
   const todos = [
     {
       title: "Do the demo!",
-      body: "Do the demo",
     },
     {
       title: "Don't forget to do the demo!",
-      body: "Don't forget to do the demo!",
     },
   ];
 
