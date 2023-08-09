@@ -1,3 +1,12 @@
+# Demo
+
+- [Remix Indie Stack Template](https://github.com/remix-run/indie-stack) that is used for this demo
+
+- Sync changes in the model with prisma
+```sh
+npx prisma db push
+```
+
 # Remix Indie Stack
 
 ![The Remix Indie Stack](https://repository-images.githubusercontent.com/465928257/a241fa49-bd4d-485a-a2a5-5cb8e4ee0abf)

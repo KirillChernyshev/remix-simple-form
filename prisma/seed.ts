@@ -40,6 +40,25 @@ async function seed() {
     },
   });
 
+  const todos = [
+    {
+      title: "Do the demo!",
+      body: "Do the demo",
+    },
+    {
+      title: "Don't forget to do the demo!",
+      body: "Don't forget to do the demo!",
+    },
+  ];
+
+  for (const todo of todos) {
+    await prisma.todo.upsert({
+      where: { title: todo.title },
+      update: todo,
+      create: todo,
+    });
+  }
+
   console.log(`Database has been seeded. 🌱`);
 }
 
