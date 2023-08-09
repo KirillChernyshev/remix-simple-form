@@ -22,7 +22,7 @@ export default function TodosRoute() {
       <h1>Todos</h1>
       <ul>
         {todos.map((todo) => (
-          <li key={`/todos/${todo.id}`}>
+          <li key={todo.id}>
             <Link
               to={todo.id}
               prefetch="intent"
