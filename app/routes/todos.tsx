@@ -23,6 +23,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
 
   const title = formData.get("title") as string;
+  console.log("title", title);
   return await createTodo({ title });
 };
 
