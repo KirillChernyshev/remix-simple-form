@@ -1,6 +1,3 @@
-import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction, LoaderArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -9,8 +6,11 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import type { LinksFunction, LoaderArgs } from "@remix-run/node";
 
+import { cssBundleHref } from "@remix-run/css-bundle";
 import { getUser } from "~/session.server";
+import { json } from "@remix-run/node";
 import stylesheet from "~/tailwind.css";
 
 export const links: LinksFunction = () => [
@@ -32,7 +32,13 @@ export default function App() {
         <Links />
       </head>
       <body className="h-full">
-        <Outlet />
+        <main>
+          <div className="flex h-screen">
+            <div className="flex h-screen w-screen flex-col items-center justify-center">
+              <Outlet />
+            </div>
+          </div>
+        </main>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
