@@ -4,10 +4,10 @@ import { createTodo, getTodoListings } from "~/models/todo.server";
 
 import { json } from "@remix-run/node";
 
-const formClasses = "flex flex-col space-y-2";
-const buttonClasses =
+export const formClasses = "flex flex-col space-y-2";
+export const buttonClasses =
   "rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300";
-const inputClasses = "rounded-md border border-gray-300 px-4 py-2";
+export const inputClasses = "rounded-md border border-gray-300 px-4 py-2";
 
 type LoaderData = {
   todos: Awaited<ReturnType<typeof getTodoListings>>;
@@ -26,17 +26,6 @@ export const action: ActionFunction = async ({ request }) => {
   return await createTodo({ title });
 };
 
-export const NewTodoForm = () => {
-  return (
-    <Form className={formClasses} method="post" action="/todos">
-      <input className={inputClasses} name="title" />
-      <button className={buttonClasses} type="submit">
-        Create Todo
-      </button>
-    </Form>
-  );
-};
-
 export default function TodosRoute() {
   const { todos } = useLoaderData<LoaderData>();
 
@@ -53,7 +42,13 @@ export default function TodosRoute() {
             ))}
           </ul>
         </div>
-        <NewTodoForm key={todos.length} />
+
+        <Form className={formClasses} method="post" action="/todos">
+          <input className={inputClasses} name="title" />
+          <button className={buttonClasses} type="submit">
+            Create Todo
+          </button>
+        </Form>
       </div>
     </div>
   );
