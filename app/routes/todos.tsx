@@ -14,7 +14,7 @@ type LoaderData = {
 };
 
 export const loader: LoaderFunction = async () => {
-  const todos = await getTodoListings();
+  const todos = await getTodoListings(); // fetch from database
 
   return json<LoaderData>({ todos });
 };
@@ -24,7 +24,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   const title = formData.get("title") as string;
   console.log("title", title);
-  return await createTodo({ title });
+  return await createTodo({ title }); // save to database
 };
 
 export default function TodosRoute() {
